@@ -30,22 +30,29 @@ public boolean is_empty() {
 public void insert_with_priority(int v,int p) {
   if(size == index ) return;
   if(index == 0) { que[index++] = new Item(p,v);}
+  else {
   int j= index;
-System.out.println(v+" "+p+ " " +j);
+System.out.println("For inserting " + v+" "+p+ " " +j);
   for(;j>0 && que[j-1].priority > p ;j--) {
       que[j] = que[j-1];
   }
   que[j] = new Item(p,v);
   index++;
+  }
+  
+  
 }
 
 public int pull_highest_priority_element() {
     return que[index--].value;
 }
 public void print() {
-  for(int i=0;i<=index;i++){
-    System.out.println(que[i].value);
+	int i=0;
+  for(;i<index-1;i++){
+    System.out.print(que[i].value+" ");
   }
+  if(index > 0){
+  System.out.print(que[i].value);}
 }
 }
 
@@ -57,6 +64,7 @@ pq.insert_with_priority(10,5);
 pq.insert_with_priority(2,3);
 pq.insert_with_priority(88,7);
 pq.insert_with_priority(12,4);
+
     pq.print();
 
   }
