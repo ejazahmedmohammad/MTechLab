@@ -44,15 +44,18 @@ System.out.println("For inserting " + v+" "+p+ " " +j);
 }
 
 public int pull_highest_priority_element() {
-    return que[index--].value;
+	
+    return que[--index].value;
 }
+
+
 public void print() {
 	int i=0;
   for(;i<index-1;i++){
     System.out.print(que[i].value+" ");
   }
   if(index > 0){
-  System.out.print(que[i].value);}
+  System.out.println(que[index-1].value);}
 }
 }
 
@@ -67,5 +70,10 @@ pq.insert_with_priority(12,4);
 
     pq.print();
 
+System.out.println(pq.pull_highest_priority_element());
+  
+System.out.println(pq.pull_highest_priority_element());
+
+System.out.println(pq.pull_highest_priority_element());
   }
 }
