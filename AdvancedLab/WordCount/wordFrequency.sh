@@ -1,1 +1,1 @@
- cat Data.txt | xargs -n1|sort |uniq -c|sort -r
+ cat Data.txt | xargs -n1|sort |uniq -c|sort -nr
