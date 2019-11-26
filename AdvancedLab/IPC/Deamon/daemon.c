@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 #include<stdlib.h>
  #include <unistd.h>
@@ -7,7 +8,7 @@ int main() {
 
 	pid_t pid, sid;
 
-        /* Fork off the parent process */       
+        /* Fork off the parent process */
         pid = fork();
         if (pid < 0) {
                 exit(EXIT_FAILURE);
@@ -30,10 +31,7 @@ int main() {
 	close(STDOUT_FILENO);
 	close(STDERR_FILENO);
 
-	while(1) {
-               printf("Deamon started");
-		sleep(30);
-		printf("Deamon ended");
-	}
+  execlp("python3","/home/ejaz/nfp/echoServer.py","/home/ejaz/nfp/echoServer.py",(char*)NULL);
+
 	exit(EXIT_SUCCESS);
 }
