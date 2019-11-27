@@ -7,6 +7,6 @@ try:
   conn, addr = sock.accept()
   while True:
     conn.send(conn.recv(1024))
-    conn.close()
+  conn.close()
 except:
   print("fa")
