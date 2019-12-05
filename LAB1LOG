@@ -1,0 +1,344 @@
+mysql>
+mysql> CREATE TABLE DEPENDENT
+    -> ( Essn            CHAR(9)           NOT NULL,
+    ->   Dependent_name  VARCHAR(15)       NOT NULL,
+    ->   Sex             CHAR,
+    ->   Bdate           DATE,
+    ->   Relationship    VARCHAR(8),
+    -> PRIMARY KEY (Essn, Dependent_name),
+    -> FOREIGN KEY (Essn) REFERENCES EMPLOYEE(Ssn) );
+Query OK, 0 rows affected (0.29 sec)
+
+mysql>
+mysql> INSERT INTO EMPLOYEE
+    -> VALUES      ('John','B','Smith',123456789,'1965-01-09','731 Fondren, Houston TX','M',30000,333445555,5),
+    ->             ('Franklin','T','Wong',333445555,'1965-12-08','638 Voss, Houston TX','M',40000,888665555,5),
+    ->             ('Alicia','J','Zelaya',999887777,'1968-01-19','3321 Castle, Spring TX','F',25000,987654321,4),
+    ->             ('Jennifer','S','Wallace',987654321,'1941-06-20','291 Berry, Bellaire TX','F',43000,888665555,4),
+    ->             ('Ramesh','K','Narayan',666884444,'1962-09-15','975 Fire Oak, Humble TX','M',38000,333445555,5),
+    ->             ('Joyce','A','English',453453453,'1972-07-31','5631 Rice, Houston TX','F',25000,333445555,5),
+    ->             ('Ahmad','V','Jabbar',987987987,'1969-03-29','980 Dallas, Houston TX','M',25000,987654321,4),
+    ->             ('James','E','Borg',888665555,'1937-11-10','450 Stone, Houston TX','M',55000,null,1);
+Query OK, 8 rows affected (0.07 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> INSERT INTO DEPARTMENT
+    -> VALUES      ('Research',5,333445555,'1988-05-22'),
+    ->             ('Administration',4,987654321,'1995-01-01'),
+    ->             ('Headquarters',1,888665555,'1981-06-19');
+Query OK, 3 rows affected (0.13 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> INSERT INTO PROJECT
+    -> VALUES      ('ProductX',1,'Bellaire',5),
+    ->             ('ProductY',2,'Sugarland',5),
+    ->             ('ProductZ',3,'Houston',5),
+    ->             ('Computerization',10,'Stafford',4),
+    ->             ('Reorganization',20,'Houston',1),
+    ->             ('Newbenefits',30,'Stafford',4);
+Query OK, 6 rows affected (0.12 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> INSERT INTO WORKS_ON
+    -> VALUES     (123456789,1,32.5),
+    ->            (123456789,2,7.5),
+    ->            (666884444,3,40.0),
+    ->            (453453453,1,20.0),
+    ->            (453453453,2,20.0),
+    ->            (333445555,2,10.0),
+    ->            (333445555,3,10.0),
+    ->            (333445555,10,10.0),
+    ->            (333445555,20,10.0),
+    ->            (999887777,30,30.0),
+    ->            (999887777,10,10.0),
+    ->            (987987987,10,35.0),
+    ->            (987987987,30,5.0),
+    ->            (987654321,30,20.0),
+    ->            (987654321,20,15.0),
+    ->            (888665555,20,16.0);
+Query OK, 16 rows affected (0.03 sec)
+Records: 16  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> INSERT INTO DEPENDENT
+    -> VALUES      (333445555,'Alice','F','1986-04-04','Daughter'),
+    ->             (333445555,'Theodore','M','1983-10-25','Son'),
+    ->             (333445555,'Joy','F','1958-05-03','Spouse'),
+    ->             (987654321,'Abner','M','1942-02-28','Spouse'),
+    ->             (123456789,'Michael','M','1988-01-04','Son'),
+    ->             (123456789,'Alice','F','1988-12-30','Daughter'),
+    ->             (123456789,'Elizabeth','F','1967-05-05','Spouse');
+Query OK, 7 rows affected (0.12 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> INSERT INTO DEPT_LOCATIONS
+    -> VALUES      (1,'Houston'),
+    ->             (4,'Stafford'),
+    ->             (5,'Bellaire'),
+    ->             (5,'Sugarland'),
+    ->             (5,'Houston');
+Query OK, 5 rows affected (0.04 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> ALTER TABLE DEPARTMENT
+    ->  ADD CONSTRAINT Dep_emp FOREIGN KEY (Mgr_ssn) REFERENCES EMPLOYEE(Ssn);
+Query OK, 3 rows affected (1.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> ALTER TABLE EMPLOYEE
+    ->  ADD CONSTRAINT Emp_emp FOREIGN KEY (Super_ssn) REFERENCES EMPLOYEE(Ssn);
+Query OK, 8 rows affected (0.96 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE EMPLOYEE
+    ->  ADD CONSTRAINT Emp_dno FOREIGN KEY  (Dno) REFERENCES DEPARTMENT(Dnumber);
+Query OK, 8 rows affected (1.22 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE EMPLOYEE
+    ->  ADD CONSTRAINT Emp_super FOREIGN KEY  (Super_ssn) REFERENCES EMPLOYEE(Ssn);
+Query OK, 8 rows affected (1.83 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> show tables
+    -> ;
++-------------------+
+| Tables_in_company |
++-------------------+
+| DEPARTMENT        |
+| DEPENDENT         |
+| DEPT_LOCATIONS    |
+| EMPLOYEE          |
+| PROJECT           |
+| WORKS_ON          |
++-------------------+
+6 rows in set (0.03 sec)
+
+mysql> desc employee
+    -> ;
+ERROR 1146 (42S02): Table 'company.employee' doesn't exist
+mysql> desc Employee
+    -> ;
+ERROR 1146 (42S02): Table 'company.Employee' doesn't exist
+mysql> desc Employee;
+ERROR 1146 (42S02): Table 'company.Employee' doesn't exist
+mysql> desc department;
+ERROR 1146 (42S02): Table 'company.department' doesn't exist
+mysql> describe department;
+ERROR 1146 (42S02): Table 'company.department' doesn't exist
+mysql> sow department;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sow department' at line 1
+mysql> desc employee;
+ERROR 1146 (42S02): Table 'company.employee' doesn't exist
+mysql> select * from employee
+    -> ;
+ERROR 1146 (42S02): Table 'company.employee' doesn't exist
+mysql> show tables
+    -> ;
++-------------------+
+| Tables_in_company |
++-------------------+
+| DEPARTMENT        |
+| DEPENDENT         |
+| DEPT_LOCATIONS    |
+| EMPLOYEE          |
+| PROJECT           |
+| WORKS_ON          |
++-------------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from project
+    -> ;
+ERROR 1146 (42S02): Table 'company.project' doesn't exist
+mysql> select * from company.project
+    -> ;
+ERROR 1146 (42S02): Table 'company.project' doesn't exist
+mysql> show tables;
++-------------------+
+| Tables_in_company |
++-------------------+
+| DEPARTMENT        |
+| DEPENDENT         |
+| DEPT_LOCATIONS    |
+| EMPLOYEE          |
+| PROJECT           |
+| WORKS_ON          |
++-------------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from employee
+    -> ;
+ERROR 1146 (42S02): Table 'company.employee' doesn't exist
+mysql> select * from EMPLOYEE;
++----------+-------+---------+-----------+------------+-------------------------+------+--------+-----------+-----+
+| Fname    | Minit | Lname   | Ssn       | Bdate      | Address                 | Sex  | Salary | Super_ssn | Dno |
++----------+-------+---------+-----------+------------+-------------------------+------+--------+-----------+-----+
+| John     | B     | Smith   | 123456789 | 1965-01-09 | 731 Fondren, Houston TX | M    |  30000 | 333445555 |   5 |
+| Franklin | T     | Wong    | 333445555 | 1965-12-08 | 638 Voss, Houston TX    | M    |  40000 | 888665555 |   5 |
+| Joyce    | A     | English | 453453453 | 1972-07-31 | 5631 Rice, Houston TX   | F    |  25000 | 333445555 |   5 |
+| Ramesh   | K     | Narayan | 666884444 | 1962-09-15 | 975 Fire Oak, Humble TX | M    |  38000 | 333445555 |   5 |
+| James    | E     | Borg    | 888665555 | 1937-11-10 | 450 Stone, Houston TX   | M    |  55000 | NULL      |   1 |
+| Jennifer | S     | Wallace | 987654321 | 1941-06-20 | 291 Berry, Bellaire TX  | F    |  43000 | 888665555 |   4 |
+| Ahmad    | V     | Jabbar  | 987987987 | 1969-03-29 | 980 Dallas, Houston TX  | M    |  25000 | 987654321 |   4 |
+| Alicia   | J     | Zelaya  | 999887777 | 1968-01-19 | 3321 Castle, Spring TX  | F    |  25000 | 987654321 |   4 |
++----------+-------+---------+-----------+------------+-------------------------+------+--------+-----------+-----+
+8 rows in set (0.00 sec)
+
+mysql> select * from EMPLOYEE where Sex = 'F'
+    -> ;
++----------+-------+---------+-----------+------------+------------------------+------+--------+-----------+-----+
+| Fname    | Minit | Lname   | Ssn       | Bdate      | Address                | Sex  | Salary | Super_ssn | Dno |
++----------+-------+---------+-----------+------------+------------------------+------+--------+-----------+-----+
+| Joyce    | A     | English | 453453453 | 1972-07-31 | 5631 Rice, Houston TX  | F    |  25000 | 333445555 |   5 |
+| Jennifer | S     | Wallace | 987654321 | 1941-06-20 | 291 Berry, Bellaire TX | F    |  43000 | 888665555 |   4 |
+| Alicia   | J     | Zelaya  | 999887777 | 1968-01-19 | 3321 Castle, Spring TX | F    |  25000 | 987654321 |   4 |
++----------+-------+---------+-----------+------------+------------------------+------+--------+-----------+-----+
+3 rows in set (0.04 sec)
+
+mysql> select * from EMPLOYEE where Sex = 'F' and Salaray > 4012
+    -> ;
+ERROR 1054 (42S22): Unknown column 'Salaray' in 'where clause'
+mysql> select * from EMPLOYEE where Sex = 'F' and Salary > 4012
+    -> ;
++----------+-------+---------+-----------+------------+------------------------+------+--------+-----------+-----+
+| Fname    | Minit | Lname   | Ssn       | Bdate      | Address                | Sex  | Salary | Super_ssn | Dno |
++----------+-------+---------+-----------+------------+------------------------+------+--------+-----------+-----+
+| Joyce    | A     | English | 453453453 | 1972-07-31 | 5631 Rice, Houston TX  | F    |  25000 | 333445555 |   5 |
+| Jennifer | S     | Wallace | 987654321 | 1941-06-20 | 291 Berry, Bellaire TX | F    |  43000 | 888665555 |   4 |
+| Alicia   | J     | Zelaya  | 999887777 | 1968-01-19 | 3321 Castle, Spring TX | F    |  25000 | 987654321 |   4 |
++----------+-------+---------+-----------+------------+------------------------+------+--------+-----------+-----+
+3 rows in set (0.00 sec)
+
+mysql> select * from EMPLOYEE where Dno = 5;
++----------+-------+---------+-----------+------------+-------------------------+------+--------+-----------+-----+
+| Fname    | Minit | Lname   | Ssn       | Bdate      | Address                 | Sex  | Salary | Super_ssn | Dno |
++----------+-------+---------+-----------+------------+-------------------------+------+--------+-----------+-----+
+| John     | B     | Smith   | 123456789 | 1965-01-09 | 731 Fondren, Houston TX | M    |  30000 | 333445555 |   5 |
+| Franklin | T     | Wong    | 333445555 | 1965-12-08 | 638 Voss, Houston TX    | M    |  40000 | 888665555 |   5 |
+| Joyce    | A     | English | 453453453 | 1972-07-31 | 5631 Rice, Houston TX   | F    |  25000 | 333445555 |   5 |
+| Ramesh   | K     | Narayan | 666884444 | 1962-09-15 | 975 Fire Oak, Humble TX | M    |  38000 | 333445555 |   5 |
++----------+-------+---------+-----------+------------+-------------------------+------+--------+-----------+-----+
+4 rows in set (0.03 sec)
+
+mysql> select * from EMPLOYEE where Super_ssn is NULL;
++-------+-------+-------+-----------+------------+-----------------------+------+--------+-----------+-----+
+| Fname | Minit | Lname | Ssn       | Bdate      | Address               | Sex  | Salary | Super_ssn | Dno |
++-------+-------+-------+-----------+------------+-----------------------+------+--------+-----------+-----+
+| James | E     | Borg  | 888665555 | 1937-11-10 | 450 Stone, Houston TX | M    |  55000 | NULL      |   1 |
++-------+-------+-------+-----------+------------+-----------------------+------+--------+-----------+-----+
+1 row in set (0.00 sec)
+
+mysql> select Fname from EMPLOYEE where Super_ssn is NULL;
++-------+
+| Fname |
++-------+
+| James |
++-------+
+1 row in set (0.00 sec)
+
+mysql> select avg(Salary),min(Salary),max(Salary) from Employee where Dno=5 group by Dno;
+ERROR 1146 (42S02): Table 'company.Employee' doesn't exist
+mysql> select avg(Salary),min(Salary),max(Salary) from EMPLOYEE where Dno=5 group by Dno;
++-------------+-------------+-------------+
+| avg(Salary) | min(Salary) | max(Salary) |
++-------------+-------------+-------------+
+|  33250.0000 |       25000 |       40000 |
++-------------+-------------+-------------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql> select E.Fname, SUP.Fname from EMPLOYEE E left join (select Fname,Ssn from EMPLOYEE) as SUP on E.Super_ssn = SUP.Ssn;
++----------+----------+
+| Fname    | Fname    |
++----------+----------+
+| John     | Franklin |
+| Franklin | James    |
+| Joyce    | Franklin |
+| Ramesh   | Franklin |
+| James    | NULL     |
+| Jennifer | James    |
+| Ahmad    | Jennifer |
+| Alicia   | Jennifer |
++----------+----------+
+8 rows in set (0.00 sec)
+
+mysql> select E.Fname, SUP.Fname from EMPLOYEE E left join (select Fname,Ssn from EMPLOYEE) as SUP on E.Super_ssmysql> select avg(Salary),min(Salary),
+mysql> SELECT * FROM EMPLOYEE AS E INNER JOIN DEPENDENT AS D ON E.SSN = D.ESSN;
++----------+-------+---------+-----------+------------+-------------------------+------+--------+-----------+-----+-----------+----------------+------+------------+--------------+
+| Fname    | Minit | Lname   | Ssn       | Bdate      | Address                 | Sex  | Salary | Super_ssn | Dno | Essn      | Dependent_name | Sex  | Bdate      | Relationship |
++----------+-------+---------+-----------+------------+-------------------------+------+--------+-----------+-----+-----------+----------------+------+------------+--------------+
+| John     | B     | Smith   | 123456789 | 1965-01-09 | 731 Fondren, Houston TX | M    |  30000 | 333445555 |   5 | 123456789 | Alice          | F    | 1988-12-30 | Daughter     |
+| John     | B     | Smith   | 123456789 | 1965-01-09 | 731 Fondren, Houston TX | M    |  30000 | 333445555 |   5 | 123456789 | Elizabeth      | F    | 1967-05-05 | Spouse       |
+| John     | B     | Smith   | 123456789 | 1965-01-09 | 731 Fondren, Houston TX | M    |  30000 | 333445555 |   5 | 123456789 | Michael        | M    | 1988-01-04 | Son          |
+| Franklin | T     | Wong    | 333445555 | 1965-12-08 | 638 Voss, Houston TX    | M    |  40000 | 888665555 |   5 | 333445555 | Alice          | F    | 1986-04-04 | Daughter     |
+| Franklin | T     | Wong    | 333445555 | 1965-12-08 | 638 Voss, Houston TX    | M    |  40000 | 888665555 |   5 | 333445555 | Joy            | F    | 1958-05-03 | Spouse       |
+| Franklin | T     | Wong    | 333445555 | 1965-12-08 | 638 Voss, Houston TX    | M    |  40000 | 888665555 |   5 | 333445555 | Theodore       | M    | 1983-10-25 | Son          |
+| Jennifer | S     | Wallace | 987654321 | 1941-06-20 | 291 Berry, Bellaire TX  | F    |  43000 | 888665555 |   4 | 987654321 | Abner          | M    | 1942-02-28 | Spouse       |
++----------+-------+---------+-----------+------------+-------------------------+------+--------+-----------+-----+-----------+----------------+------+------------+--------------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT DNAME , Dlocation FROM DEPARTMENT INNER JOIN DEPT_LOCATIONS ON DNUMBER;
+ERROR 1052 (23000): Column 'DNUMBER' in on clause is ambiguous
+mysql>  SELECT DNAME , Dlocation FROM DEPARTMENT AS D JOIN DEPT_LOCATIONS AS DL ON D.DNUMBER=DL.DNUMBER;
++----------------+-----------+
+| DNAME          | Dlocation |
++----------------+-----------+
+| Administration | Stafford  |
+| Headquarters   | Houston   |
+| Research       | Bellaire  |
+| Research       | Houston   |
+| Research       | Sugarland |
++----------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT DNAME,COUNT(*) FROM DEPARTMENT GROUP BY DNAME;
++----------------+----------+
+| DNAME          | COUNT(*) |
++----------------+----------+
+| Administration |        1 |
+| Headquarters   |        1 |
+| Research       |        1 |
++----------------+----------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT DNAME,C FROM DEPARTMENT D INNER JOIN (SELECT DNO,COUNT(*) AS C FROM EMPLOYEE GROUP BY DNO ) AS CN ON CN.DNO = D.DNUMBER;
++----------------+---+
+| DNAME          | C |
++----------------+---+
+| Administration | 3 |
+| Headquarters   | 1 |
+| Research       | 4 |
++----------------+---+
+3 rows in set (0.00 sec)
+
+mysql> SELECT PNAME,COUNT FROM PROJECT P INNER JOIN (SELECT COUNT(ESSN) AS COUNT,PNO FROM WORKS_ON GROUP BY PNO) AS EC ON P.PNUMBER = EC.PNO;
++-----------------+-------+
+| PNAME           | COUNT |
++-----------------+-------+
+| Computerization |     3 |
+| Newbenefits     |     3 |
+| ProductX        |     2 |
+| ProductY        |     3 |
+| ProductZ        |     2 |
+| Reorganization  |     3 |
++-----------------+-------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT PNAME, TOTAL_HOURS FROM PROJECT P INNER JOIN (SELECT PNO,SUM(HOURS) AS TOTAL_HOURS FROM WORKS_ON GROUP BY PNO) AS TH ON TH.PNO = P.PNUMBER;
++-----------------+-------------+
+| PNAME           | TOTAL_HOURS |
++-----------------+-------------+
+| Computerization |        55.0 |
+| Newbenefits     |        55.0 |
+| ProductX        |        52.5 |
+| ProductY        |        37.5 |
+| ProductZ        |        50.0 |
+| Reorganization  |        41.0 |
++-----------------+-------------+
+6 rows in set (0.00 sec)
