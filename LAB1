@@ -7,6 +7,7 @@ select * from EMPLOYEE where Sex = 'F' and Salary > 4012;
   select avg(Salary),min(Salary),max(Salary) from EMPLOYEE where Dno=5 group by Dno;
 
   select E.Fname, SUP.Fname from EMPLOYEE E left join (select Fname,Ssn from EMPLOYEE) as SUP on E.Super_ssn = SUP.Ssn;
+  //select E.Fname as name, S.Fname as SuperVisor from EMPLOYEE E,EMPLOYEE S where E.Super_ssn = S.Ssn
 
 SELECT * FROM EMPLOYEE AS E INNER JOIN DEPENDENT AS D ON E.SSN = D.ESSN;
 
