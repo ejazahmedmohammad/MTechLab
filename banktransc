@@ -1,18 +1,22 @@
 CREATE TABLE `bank`.`account` ( `number` INT(20) NOT NULL , `name` VARCHAR(25) NOT NULL , `balance` INT(20) NOT NULL , PRIMARY KEY (`number`)) ENGINE = InnoDB;
 INSERT INTO `balance` (`Number`, `Name`, `balance`) VALUES ('1', 'akaash', '5000'), ('2', 'ejaz', '6000'), ('3', 'nirisha', '3000'),('4', 'noor', '12000'), ('5', 'prity', '5025');
 
-deduct 100 rs from one account and add 100 to another account.
+1)deduct 100 rs from one account and add 100 to another account.
 Start TRANSACTION;
 UPDATE account set balance=balance-100 where number=2;
 UPDATE account set balance=balance+100 where number=1;
 commit;
+*Change in final state observed
 
-Deduct 100 from 1 account enter the transaction failure commit.
+2)Deduct 100 from 1 account enter the transaction failure commit.
 Start TRANSACTION;
 UPDATE account set balance=balance-100 where number=2;
 rollback;
+*Change in start is not obserevd as we do rollback
 
-initiate 2 transaction one transaction will deduct money from 1 account and add to another account. Second transaction will sum all the accounts balance.
+
+
+3)initiate 2 transaction one transaction will deduct money from 1 account and add to another account. Second transaction will sum all the accounts balance.
 
 t1
 Start TRANSACTION;
@@ -23,18 +27,19 @@ commit;
 t2
 select sum(balance) from account;
 
-Add 100 rs to one account in 1 transactions and in another transaction after the update of previus transaction then read. Check if update is reflected in the db
-5.	No reflected
+*) we counld see the change in t2 once t1 gets commited
 
-Two transactions are writing to the same account number. 
 
+4)Add 100 rs to one account in 1 transactions and in another transaction after the update of previus transaction then read. Check if update is reflected in the db
+*)No reflected
+
+5)Two transactions are writing to the same account number. *)
 t2 update query does not get executed 
 ERROR 1205 (HY000): Lock wait timeout exceeded; try restarting transaction
 
-
-Two transactions are writing the sum of all accounts.
+6)Two transactions are calcuting the sum of all accounts.
 no issues
 
-t1 - add 10 /- to aall t2 sum of all
-t2 does show data from at its start time;
-
+7) t1 - add 10 /- to aall t2 sum of all
+   t2 does show data from at its start time;
+In t2 we do not see the changes even t1  get commits(its reading from cache))
